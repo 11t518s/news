@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { takeEvery } from "redux-saga/effects";
+import { all, fork, takeLatest } from "redux-saga/effects";
 
 export const getNewsAction = createAction("news/getNews");
 
@@ -11,6 +11,10 @@ function* getNewsSaga() {
   }
 }
 
-export function* newsSaga() {
-  yield takeEvery(getNewsAction, getNewsSaga);
+export function* watchGetNewsSaga() {
+  yield takeLatest(getNewsAction, getNewsSaga);
+}
+
+export default function* newsSaga() {
+  yield all([fork(watchGetNewsSaga)]);
 }
