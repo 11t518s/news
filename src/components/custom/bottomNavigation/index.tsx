@@ -44,7 +44,8 @@ const MainContainer = styled.div`
   background-color: ${({ theme }) => theme.color.black};
   display: flex;
   justify-content: space-between;
-  border-radius: 30px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   width: 100%;
   padding: 0 60px;
   box-sizing: border-box;

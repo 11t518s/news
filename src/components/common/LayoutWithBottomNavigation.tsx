@@ -16,7 +16,6 @@ const LayoutWithBottomNavigation = ({ children }: Props) => {
     bottomNavigationRef.current &&
       setBottomNavigationHeight(bottomNavigationRef.current.clientHeight);
   }, []);
-  console.log(bottomNavigationHeight);
 
   return (
     <Container>
@@ -50,9 +49,9 @@ export default LayoutWithBottomNavigation;
 
 const Container = styled.div`
   width: 375px;
-  height: 100%;
+  height: 100vh;
 `;
 const ContentContainer = styled.div<{ excludeHeight: number }>`
   padding-bottom: ${({ excludeHeight }) => `${excludeHeight}px`};
-  height: ${({ excludeHeight }) => `calc(100% -${excludeHeight}px)`};
+  height: ${({ excludeHeight }) => `calc(100vh -${excludeHeight}px)`};
 `;
