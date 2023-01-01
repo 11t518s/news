@@ -31,7 +31,7 @@ const LayoutWithBottomNavigation = ({ children }: Props) => {
           iconComponent={(color: string) => (
             <bottomNavigationImages.homeIconComponent color={color} />
           )}
-          title={"홈 "}
+          title={"홈"}
         />
         <BottomNavigation.Tab
           route={BottomTabRouteEnum.scrap}
@@ -50,8 +50,11 @@ export default LayoutWithBottomNavigation;
 const Container = styled.div`
   width: 375px;
   height: 100vh;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.color.background};
 `;
 const ContentContainer = styled.div<{ excludeHeight: number }>`
   padding-bottom: ${({ excludeHeight }) => `${excludeHeight}px`};
-  height: ${({ excludeHeight }) => `calc(100vh -${excludeHeight}px)`};
+  overflow: scroll;
+  height: ${({ excludeHeight }) => `calc(100vh - ${excludeHeight}px)`};
 `;

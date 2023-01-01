@@ -8,6 +8,7 @@ const color = {
   subSkyBlue: "#82B0F4",
   gray: "#C4C4C4",
   darkGray: "#6D6D6D",
+  background: "#F0F1F4",
 };
 const theme: DefaultTheme = {
   color,
