@@ -48,6 +48,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:18.2.0"],\
+            ["react-is", "npm:18.2.0"],\
             ["react-redux", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:8.0.5"],\
             ["react-router-dom", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:6.6.1"],\
             ["react-scripts", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:5.0.1"],\
@@ -12204,6 +12205,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:18.2.0"],\
+            ["react-is", "npm:18.2.0"],\
             ["react-redux", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:8.0.5"],\
             ["react-router-dom", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:6.6.1"],\
             ["react-scripts", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:5.0.1"],\
@@ -16370,7 +16372,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["hoist-non-react-statics", "npm:3.3.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:59463bba346458939dd4ae4e1fd9173c14f626387ba347939513ee21f7926b18faa671286f189286cdba63d25273d060d5b9bc89c8c625c74c1aa626903cff37#npm:18.2.0"],\
-            ["react-is", null],\
+            ["react-is", "npm:18.2.0"],\
             ["shallowequal", "npm:1.1.0"],\
             ["supports-color", "npm:5.5.0"]\
           ],\
