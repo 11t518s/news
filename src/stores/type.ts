@@ -1,7 +1,5 @@
-import { AxiosError } from "axios";
-
-export interface BasicReduxState<T> {
+export interface BasicAsyncReduxState<T> {
   isLoading: boolean;
-  data: T | null;
-  error: AxiosError | null;
+  data: T;
+  error: string;
 }

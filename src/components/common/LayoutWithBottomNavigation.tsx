@@ -48,6 +48,9 @@ const LayoutWithBottomNavigation = ({ children }: Props) => {
 export default LayoutWithBottomNavigation;
 
 const Container = styled.div`
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   width: 375px;
   height: 100vh;
   overflow: hidden;

@@ -1,8 +1,8 @@
-export interface GetNYTimes {
+export interface GetNYTimesParams {
   page: number;
-  targetCountries?: string[];
-  targetDate?: string;
-  targetHeadline?: string;
+  countries?: string[];
+  headline?: string;
+  pubDate?: string;
 }
 
 export interface NYTimes {
