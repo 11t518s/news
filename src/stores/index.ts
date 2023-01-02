@@ -1,19 +1,19 @@
 import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { newsReducer } from "./news";
-import newsSaga from "./news/saga";
-import { newsFilterReducer } from "./newsFilter";
+import { articleReducer } from "./article";
+import articleSaga from "./article/saga";
+import { articleFilterReducer } from "./articleFilter";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootSaga = function* () {
-  yield all([newsSaga()]);
+  yield all([articleSaga()]);
 };
 
 const rootReducer = combineReducers({
-  news: newsReducer,
-  newsFilter: newsFilterReducer,
+  article: articleReducer,
+  articleFilter: articleFilterReducer,
 });
 
 const createStore = () => {

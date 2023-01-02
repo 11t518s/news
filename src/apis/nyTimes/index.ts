@@ -1,21 +1,21 @@
 import axios from "axios";
-import { GetNYTimesParams, NYTimes } from "./type";
+import { GetArticleParams, Article } from "./type";
 
+// const apikey = "AljG7ANi28deGI6fiCrQB4NCvgUf7aUu";
 const apikey = "eHSHzzYsGoXTAx159wjGqxf5gYvMxiQj";
 
+const URL_PATH = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+
 class NYTimesApi {
-  getNYTimes = async ({
+  getArticle = async ({
     page,
     countries,
     pubDate,
     headline,
-  }: GetNYTimesParams): Promise<NYTimes> => {
+  }: GetArticleParams): Promise<Article> => {
     const params = this.makeParams({ countries, pubDate, headline, page });
 
-    const result = await axios.get(
-      "https://api.nytimes.com/svc/search/v2/articlesearch.json",
-      { params }
-    );
+    const result = await axios.get(URL_PATH, { params });
     if (result.status !== 200) {
       throw new Error("예상치 않은 에러가 발생했습니다.");
     }
@@ -28,7 +28,7 @@ class NYTimesApi {
     pubDate,
     headline,
     page,
-  }: GetNYTimesParams) => {
+  }: GetArticleParams) => {
     const glocationsQuery = `glocations.contains:(${countries?.join(" ")})`;
     const pubDateQuery = `pub_date:(${pubDate})`;
     const headlineQuery = `headline:(${headline})`;

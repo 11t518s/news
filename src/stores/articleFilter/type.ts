@@ -1,4 +1,4 @@
-export interface NewsFilterStore {
+export interface ArticleFilterStore {
   page: number;
   countries: string[];
   headline: string;

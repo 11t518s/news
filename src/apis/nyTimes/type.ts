@@ -1,11 +1,11 @@
-export interface GetNYTimesParams {
+export interface GetArticleParams {
   page: number;
   countries?: string[];
   headline?: string;
   pubDate?: string;
 }
 
-export interface NYTimes {
+export interface Article {
   abstract: string;
   byline: Byline;
   document_type: string;

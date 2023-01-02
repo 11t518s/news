@@ -59,5 +59,15 @@ const Container = styled.div`
 const ContentContainer = styled.div<{ excludeHeight: number }>`
   padding-bottom: ${({ excludeHeight }) => `${excludeHeight}px`};
   overflow: scroll;
-  height: ${({ excludeHeight }) => `calc(100vh - ${excludeHeight}px)`};
+  height: ${({ excludeHeight }) => `calc(100% - ${excludeHeight}px)`};
+  &.box {
+    -ms-overflow-style: none;
+  }
+  &.box::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

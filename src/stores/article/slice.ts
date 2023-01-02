@@ -1,18 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { NewsStore } from "./type";
+import { ArticleStore } from "./type";
+import { GetArticleParams } from "../../apis/nyTimes/type";
 
-const initialState: NewsStore = {
+const initialState: ArticleStore = {
   isLoading: false,
   data: [],
   error: "",
 };
 
-const newsSlice = createSlice({
+const articleSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
-    requestData(state) {
+    requestData(state, action: PayloadAction<GetArticleParams>) {
       state.isLoading = true;
       state.error = "";
     },
@@ -27,4 +28,5 @@ const newsSlice = createSlice({
   },
 });
 
-export const { reducer: newsReducer, actions: newsActions } = newsSlice;
+export const { reducer: articleReducer, actions: articleActions } =
+  articleSlice;

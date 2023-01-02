@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { NewsFilterStore } from "./type";
+import { ArticleFilterStore } from "./type";
 
-export const initialState: NewsFilterStore = {
+export const initialState: ArticleFilterStore = {
   page: 0,
   headline: "",
   pubDate: "",
   countries: [],
 };
 
-const newsSlice = createSlice({
+const articleFilterSlice = createSlice({
   name: "newsFilter",
   initialState,
   reducers: {
@@ -33,10 +33,10 @@ const newsSlice = createSlice({
       }
     },
     increasePage(state) {
-      state.page++;
+      state.page = state.page + 1;
     },
   },
 });
 
-export const { reducer: newsFilterReducer, actions: newsFilterActions } =
-  newsSlice;
+export const { reducer: articleFilterReducer, actions: articleFilterActions } =
+  articleFilterSlice;

@@ -1,31 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../stores";
-import { newsActions } from "../../stores/news";
+import ArticleItemContainer from "./_components/articleItemContainer";
+import Header from "./_components/header";
 
 const Home = () => {
-  const { data, isLoading } = useSelector((state: RootState) => state.news);
-  const dispatch = useDispatch();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
-  useEffect(() => {
-    dispatch(newsActions.requestData());
+  useLayoutEffect(() => {
+    headerRef.current && setHeaderHeight(headerRef.current.clientHeight);
   }, []);
-
   return (
     <Container>
-      <button
-        onClick={() => {
-          dispatch(newsActions.requestData());
-        }}
-      >
-        asdfasdf
-      </button>
-
-      {data.map((item) => (
-        <div>{item.headline.main}</div>
-      ))}
-      {isLoading && <div>불러오는중</div>}
+      <Header ref={headerRef} />
+      <ContentContainer excludeHeight={headerHeight}>
+        <ArticleItemContainer />
+      </ContentContainer>
     </Container>
   );
 };
@@ -33,3 +23,8 @@ const Home = () => {
 export default Home;
 
 const Container = styled.div``;
+
+const ContentContainer = styled.div<{ excludeHeight: number }>`
+  padding-top: ${({ excludeHeight }) => `${excludeHeight}px`};
+  height: ${({ excludeHeight }) => `calc(100% - ${excludeHeight}px)`};
+`;
