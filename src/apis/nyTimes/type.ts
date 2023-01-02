@@ -29,17 +29,19 @@ export interface Article {
 
 interface Byline {
   original: string;
-  person: {
-    firstname: string;
-    middlename: string | null;
-    lastname: string;
-    organization: string;
-    qualifier: string | null;
-    rank: number;
-    role: string;
-    title: string | null;
-  };
+  person: Person[];
   organization: null;
+}
+
+interface Person {
+  firstname: string;
+  middlename: string | null;
+  lastname: string;
+  organization: string;
+  qualifier: string | null;
+  rank: number;
+  role: string;
+  title: string | null;
 }
 
 interface Headline {

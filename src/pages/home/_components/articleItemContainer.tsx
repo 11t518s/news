@@ -4,7 +4,7 @@ import { RootState } from "../../../stores";
 import { useDispatch, useSelector } from "react-redux";
 import { articleActions } from "../../../stores/article";
 import { useInView } from "react-intersection-observer";
-import { articleFilterActions } from "../../../stores/articleFilter";
+import ArticleItem from "./articleItem";
 
 const ArticleItemContainer = () => {
   const { data, isLoading } = useSelector((state: RootState) => state.article);
@@ -21,17 +21,8 @@ const ArticleItemContainer = () => {
 
   return (
     <Container>
-      <button
-        onClick={() => {
-          dispatch(articleFilterActions.updateHeadLine("korea"));
-        }}
-      >
-        asdfasdf
-      </button>
       {data.map((item, index) => (
-        <div style={{ height: "100px" }} key={`${item._id}_${index}`}>
-          {item.headline.main}
-        </div>
+        <ArticleItem article={item} key={`${item._id}_${index}`} />
       ))}
       <div ref={ref} />
       {isLoading && <div>불러오는중</div>}
@@ -41,4 +32,6 @@ const ArticleItemContainer = () => {
 
 export default ArticleItemContainer;
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 20px;
+`;

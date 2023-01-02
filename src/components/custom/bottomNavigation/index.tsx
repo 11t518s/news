@@ -6,7 +6,7 @@ import {
   BottomTabRouteEnum,
   BottomTabContainerProps,
 } from "./type";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import theme from "../../../theme";
 
 const initialBottomNavigationContext: BottomNavigationContext = {
@@ -61,30 +61,30 @@ const BottomTabContainer = ({
   title,
   onClick,
 }: BottomTabContainerProps) => {
-  const navigation = useNavigate();
   const { isActive, setBottomRouteState } = useContext(bottomNavigationContext);
   const handleBottomTabContainerClick = () => {
     onClick && onClick();
-    navigation(`/${route}`);
     setBottomRouteState(route);
   };
   return (
-    <TabContainer onClick={handleBottomTabContainerClick}>
-      {iconComponent && (
-        <IconContainer>
-          {iconComponent(isActive(route) ? activeColor : inActiveColor)}
-        </IconContainer>
-      )}
-      {title && (
-        <TitleContainer
-          isActive={isActive(route)}
-          activeColor={activeColor}
-          inActiveColor={inActiveColor}
-        >
-          {title}
-        </TitleContainer>
-      )}
-    </TabContainer>
+    <Link to={route}>
+      <TabContainer onClick={handleBottomTabContainerClick}>
+        {iconComponent && (
+          <IconContainer>
+            {iconComponent(isActive(route) ? activeColor : inActiveColor)}
+          </IconContainer>
+        )}
+        {title && (
+          <TitleContainer
+            isActive={isActive(route)}
+            activeColor={activeColor}
+            inActiveColor={inActiveColor}
+          >
+            {title}
+          </TitleContainer>
+        )}
+      </TabContainer>
+    </Link>
   );
 };
 
