@@ -1,8 +1,8 @@
 import React, { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import BottomNavigation from "../custom/bottomNavigation";
-import { BottomTabRouteEnum } from "../custom/bottomNavigation/type";
 import bottomNavigationImages from "../../assets/images/router/bottomNavigation";
+import { BottomTabRouteEnum } from "../bottomNavigation/type";
+import BottomNavigation from "../bottomNavigation";
 
 interface Props {
   children: ReactNode;

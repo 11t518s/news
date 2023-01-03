@@ -7,7 +7,7 @@ import {
   BottomTabContainerProps,
 } from "./type";
 import { Link } from "react-router-dom";
-import theme from "../../../theme";
+import theme from "../../theme";
 
 const initialBottomNavigationContext: BottomNavigationContext = {
   bottomRouteState: BottomTabRouteEnum.home,

@@ -4,6 +4,7 @@ import { Article } from "../../../apis/nyTimes/type";
 import { convertDataType } from "../../../utils/time";
 import articleImages from "../../../assets/images/router/article";
 import theme from "../../../theme";
+import BasicToast from "../../../components/toast/basicToast";
 
 interface Props {
   article: Article;
@@ -11,6 +12,7 @@ interface Props {
 
 const ArticleItem = ({ article }: Props) => {
   const [isScrap, setIsScrap] = useState(false);
+  const [isToast, setIsToast] = useState(false);
   const handleScrapClick = (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) => {
@@ -20,6 +22,10 @@ const ArticleItem = ({ article }: Props) => {
     } else {
       // 스크렙 등록 하기
     }
+    setIsToast(false);
+    setTimeout(() => {
+      setIsToast(true);
+    }, 0);
     setIsScrap((prev) => !prev);
   };
 
@@ -44,6 +50,11 @@ const ArticleItem = ({ article }: Props) => {
         </ArticleInfo>
         <DateType>{convertDataType(article.pub_date)}</DateType>
       </BottomElement>
+      <BasicToast
+        isToast={isToast}
+        setIsToast={setIsToast}
+        title={isScrap ? "스크랩 하셨습니다!" : "스크랩을 취소하셨습니다."}
+      />
     </Container>
   );
 };
