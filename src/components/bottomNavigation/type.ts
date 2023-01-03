@@ -1,34 +1,24 @@
-import { CSSProperties, Dispatch, ReactNode, SetStateAction } from "react";
+import { PageRouteEnum } from "pages/type";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface BottomNavigationContext {
-  bottomRouteState: BottomTabRouteEnum;
-  setBottomRouteState: Dispatch<SetStateAction<BottomTabRouteEnum>>;
-  isActive: (thisRoute: BottomTabRouteEnum) => boolean;
+  bottomRouteState: PageRouteEnum;
+  setBottomRouteState: Dispatch<SetStateAction<PageRouteEnum>>;
+  isActive: (thisRoute: PageRouteEnum) => boolean;
 }
 export interface PropsWithChildren {
   children: ReactNode;
 }
 
-export const enum BottomTabRouteEnum {
-  home = "",
-  scrap = "scrap",
-}
-
 export interface BottomNavigationProps extends PropsWithChildren {
-  initialRoute: BottomTabRouteEnum;
+  initialRoute: PageRouteEnum;
 }
 
 export interface BottomTabContainerProps {
-  route: BottomTabRouteEnum;
+  route: PageRouteEnum;
   activeColor?: string;
   inActiveColor?: string;
   iconComponent?: (color: string) => ReactNode;
   title?: string;
   onClick?: () => void;
-}
-export interface ProductInfoProps {
-  price?: number;
-  priceStyle?: CSSProperties;
-  name?: string;
-  nameStyle?: CSSProperties;
 }

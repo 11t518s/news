@@ -1,8 +1,8 @@
 import React, { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import bottomNavigationImages from "../../assets/images/router/bottomNavigation";
-import { BottomTabRouteEnum } from "../bottomNavigation/type";
 import BottomNavigation from "../bottomNavigation";
+import { PageRouteEnum } from "../../pages/type";
 
 interface Props {
   children: ReactNode;
@@ -24,17 +24,17 @@ const LayoutWithBottomNavigation = ({ children }: Props) => {
       </ContentContainer>
       <BottomNavigation
         ref={bottomNavigationRef}
-        initialRoute={BottomTabRouteEnum.home}
+        initialRoute={PageRouteEnum.home}
       >
         <BottomNavigation.Tab
-          route={BottomTabRouteEnum.home}
+          route={PageRouteEnum.home}
           iconComponent={(color: string) => (
             <bottomNavigationImages.homeIconComponent color={color} />
           )}
           title={"홈"}
         />
         <BottomNavigation.Tab
-          route={BottomTabRouteEnum.scrap}
+          route={PageRouteEnum.scrap}
           iconComponent={(color: string) => (
             <bottomNavigationImages.scrapIconComponent color={color} />
           )}

@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as Image } from "assets/images/emptyStar.svg";
+import { ReactComponent as Image } from "assets/images/rawImages/emptyStar.svg";
 
 interface Props {
   color: string;

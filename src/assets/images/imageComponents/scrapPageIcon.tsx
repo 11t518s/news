@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as Scrap } from "assets/images/scrapPageIcon.svg";
+import { ReactComponent as Scrap } from "assets/images/rawImages/scrapPageIcon.svg";
 
 interface Props {
   color: string;

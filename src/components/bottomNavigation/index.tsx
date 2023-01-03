@@ -3,14 +3,14 @@ import styled from "styled-components";
 import {
   BottomNavigationContext,
   BottomNavigationProps,
-  BottomTabRouteEnum,
   BottomTabContainerProps,
 } from "./type";
 import { Link } from "react-router-dom";
 import theme from "../../theme";
+import { PageRouteEnum } from "../../pages/type";
 
 const initialBottomNavigationContext: BottomNavigationContext = {
-  bottomRouteState: BottomTabRouteEnum.home,
+  bottomRouteState: PageRouteEnum.home,
   setBottomRouteState: () => {},
   isActive: () => false,
 };
@@ -22,9 +22,8 @@ const bottomNavigationContext = createContext<BottomNavigationContext>(
 const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps>(
   ({ children, initialRoute }, ref) => {
     const [bottomTabRoute, setBottomTabRoute] =
-      useState<BottomTabRouteEnum>(initialRoute);
-    const isActive = (thisRoute: BottomTabRouteEnum) =>
-      bottomTabRoute === thisRoute;
+      useState<PageRouteEnum>(initialRoute);
+    const isActive = (thisRoute: PageRouteEnum) => bottomTabRoute === thisRoute;
 
     return (
       <bottomNavigationContext.Provider
