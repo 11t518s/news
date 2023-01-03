@@ -2,7 +2,7 @@ export interface GetArticleParams {
   page: number;
   countries?: string[];
   headline?: string;
-  pubDate?: string;
+  pubDate?: string | null;
 }
 
 export interface Article {

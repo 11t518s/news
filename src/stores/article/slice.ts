@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { ArticleStore } from "./type";
-import { GetArticleParams } from "../../apis/nyTimes/type";
+import { ArticleFilterStore } from "../articleFilter";
 
 const initialState: ArticleStore = {
   isLoading: false,
@@ -13,7 +13,10 @@ const articleSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
-    requestData(state, action: PayloadAction<GetArticleParams>) {
+    resetData(state) {
+      state.data = [];
+    },
+    requestData(state, action: PayloadAction<ArticleFilterStore>) {
       state.isLoading = true;
       state.error = "";
     },

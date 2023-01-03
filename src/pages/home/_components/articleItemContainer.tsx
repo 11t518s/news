@@ -25,6 +25,7 @@ const ArticleItemContainer = () => {
         <ArticleItem article={item} key={`${item._id}_${index}`} />
       ))}
       <div ref={ref} />
+
       {isLoading && <div>불러오는중</div>}
     </Container>
   );

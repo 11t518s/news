@@ -1,6 +1,11 @@
 export interface ArticleFilterStore {
   page: number;
-  countries: string[];
+  countries: Countries[];
   headline: string;
-  pubDate: string;
+  pubDate: Date | null;
+}
+
+export interface Countries {
+  displayName: string;
+  value: string;
 }

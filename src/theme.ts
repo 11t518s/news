@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 const color = {
   black: "#000000",
   white: "#ffffff",
+  darkWhite: "#f2f2f2",
   yellow: "#FFB800",
   mainBLue: "#3478F6",
   subSkyBlue: "#82B0F4",

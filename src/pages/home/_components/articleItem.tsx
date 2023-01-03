@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import { Article } from "../../../apis/nyTimes/type";
-import { convertDataType } from "../../../utils/time";
+import { convertDateForArticle } from "../../../utils/time";
 import articleImages from "../../../assets/images/router/article";
 import theme from "../../../theme";
 import BasicToast from "../../../components/toast/basicToast";
@@ -48,7 +48,7 @@ const ArticleItem = ({ article }: Props) => {
           {"  "} {article.byline.person[0]?.firstname}{" "}
           {article.byline.person[0]?.lastname}
         </ArticleInfo>
-        <DateType>{convertDataType(article.pub_date)}</DateType>
+        <DateType>{convertDateForArticle(article.pub_date)}</DateType>
       </BottomElement>
       <BasicToast
         isToast={isToast}

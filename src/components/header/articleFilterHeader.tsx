@@ -1,4 +1,4 @@
-import { createContext, forwardRef, useState } from "react";
+import { createContext, forwardRef, useContext } from "react";
 import styled from "styled-components";
 import {
   ArticleFilterHeaderContext,
@@ -6,9 +6,12 @@ import {
   ArticleFilterHeaderProps,
 } from "./type";
 import { PageRouteEnum } from "../../pages/type";
+import theme from "../../theme";
 
 const initialBottomNavigationContext: ArticleFilterHeaderContext = {
   route: PageRouteEnum.home,
+  activeColor: theme.color.subSkyBlue,
+  inactiveColor: theme.color.gray,
 };
 
 const bottomNavigationContext = createContext<ArticleFilterHeaderContext>(
@@ -16,11 +19,13 @@ const bottomNavigationContext = createContext<ArticleFilterHeaderContext>(
 );
 
 const BottomNavigation = forwardRef<HTMLDivElement, ArticleFilterHeaderProps>(
-  ({ children, route }, ref) => {
+  ({ children, route, inactiveColor, activeColor }, ref) => {
     return (
       <bottomNavigationContext.Provider
         value={{
           route,
+          activeColor,
+          inactiveColor,
         }}
       >
         <MainContainer ref={ref}>{children}</MainContainer>
@@ -31,26 +36,27 @@ const BottomNavigation = forwardRef<HTMLDivElement, ArticleFilterHeaderProps>(
 
 const MainContainer = styled.div`
   background-color: ${({ theme }) => theme.color.white};
-  padding: 13px 20px;
-  width: 100%;
-  position: fixed;
+  padding: 13px 15px;
   height: 60px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray};
   box-sizing: border-box;
   display: flex;
-  flex-direction: row; ;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  margin: 0 auto;
+  width: 375px;
 `;
 
 const Element = ({
   onClick,
   iconComponent,
   title,
-  activeColor,
-  inactiveColor,
+  isActive,
 }: ArticleFilterHeaderElementProps) => {
-  const [isActive, setIsActive] = useState(false);
+  const { activeColor, inactiveColor } = useContext(bottomNavigationContext);
   const handleElementClick = () => {
-    setIsActive((prev) => !prev);
     onClick();
   };
   return (
@@ -87,8 +93,9 @@ const ArticleFilterElementContainer = styled.button<{
   activeColor: string;
   inactiveColor: string;
 }>`
-  padding: 5px 12px;
-  margin-right: 8px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 5px;
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 30px;
   height: 34px;
@@ -117,6 +124,10 @@ const TitleContainer = styled.div<{
 }>`
   color: ${({ activeColor, inactiveColor, isActive }) =>
     isActive ? activeColor : inactiveColor};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 85px;
+  white-space: nowrap;
 `;
 
 const total = Object.assign(BottomNavigation, { Element });
