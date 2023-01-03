@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import store from "store";
-import PageRouter from "./pages";
+import { ThemeProvider } from "styled-components";
+
+import store from "stores";
+import PageRouter from "pages/router";
+import theme from "theme";
 import "./index.css";
 
 const root = ReactDOM.createRoot(
@@ -12,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store()}>
-      <PageRouter />
+      <ThemeProvider theme={theme}>
+        <PageRouter />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );
