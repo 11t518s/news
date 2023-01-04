@@ -1,4 +1,10 @@
-import React, { Dispatch, ReactNode, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import styled, { keyframes } from "styled-components";
 
 interface Props {
@@ -8,6 +14,7 @@ interface Props {
 }
 
 const BasicModal = ({ isModal, setIsModal, children }: Props) => {
+  const [initial, setInitial] = useState(true);
   const closeModal = () => {
     setIsModal(false);
   };
@@ -17,10 +24,22 @@ const BasicModal = ({ isModal, setIsModal, children }: Props) => {
     e.stopPropagation();
   };
 
+  useEffect(() => {
+    setTimeout(() => setInitial(false), 500);
+  }, []);
+
   return (
     <>
-      <OuterContainer isModal={isModal} onClick={closeModal} />
-      <InnerContainer isModal={isModal} onClick={clickInnerContainer}>
+      <OuterContainer
+        isModal={isModal}
+        initial={initial}
+        onClick={closeModal}
+      />
+      <InnerContainer
+        isModal={isModal}
+        initial={initial}
+        onClick={clickInnerContainer}
+      >
         {children}
       </InnerContainer>
     </>
@@ -50,7 +69,7 @@ const outerCloseAnimation = keyframes`
     }
 `;
 
-const OuterContainer = styled.div<{ isModal: boolean }>`
+const OuterContainer = styled.div<{ isModal: boolean; initial: boolean }>`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.color.black};
@@ -61,7 +80,7 @@ const OuterContainer = styled.div<{ isModal: boolean }>`
   cursor: pointer;
   animation: ${({ isModal }) =>
       isModal ? outerOpenAnimation : outerCloseAnimation}
-    0.2s linear forwards;
+    ${({ initial }) => (initial ? "0s" : "0.2s")} linear forwards;
 `;
 
 const innerOpenAnimation = keyframes`
@@ -84,10 +103,11 @@ const innerCloseAnimation = keyframes`
       visibility: hidden;
     }
 `;
-const InnerContainer = styled.div<{ isModal: boolean }>`
+
+const InnerContainer = styled.div<{ isModal: boolean; initial: boolean }>`
   animation: ${({ isModal }) =>
       isModal ? innerOpenAnimation : innerCloseAnimation}
-    0.2s linear forwards;
+    ${({ initial }) => (initial ? "0s" : "0.2s")} linear forwards;
 
   background-color: ${({ theme }) => theme.color.white};
   position: absolute;

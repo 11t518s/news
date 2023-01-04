@@ -4,16 +4,21 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { articleReducer } from "./article";
 import articleSaga from "./article/saga";
 import { articleFilterReducer } from "./articleFilter";
+import { scrapArticleFilterReducer } from "./scrapArticleFilter";
+import { scrapArticleReducer } from "./scrapArticle";
+import scrapArticleSaga from "./scrapArticle/saga";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootSaga = function* () {
-  yield all([articleSaga()]);
+  yield all([articleSaga(), scrapArticleSaga()]);
 };
 
 const rootReducer = combineReducers({
   article: articleReducer,
   articleFilter: articleFilterReducer,
+  scrapArticleFilter: scrapArticleFilterReducer,
+  scrapArticle: scrapArticleReducer,
 });
 
 const createStore = () => {

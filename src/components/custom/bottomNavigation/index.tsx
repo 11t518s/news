@@ -6,11 +6,11 @@ import {
   BottomTabContainerProps,
 } from "./type";
 import { Link } from "react-router-dom";
-import theme from "../../theme";
-import { PageRouteEnum } from "../../pages/type";
+import { PageRouteEnum } from "pages/type";
+import theme from "theme";
 
 const initialBottomNavigationContext: BottomNavigationContext = {
-  bottomRouteState: PageRouteEnum.home,
+  bottomRouteState: window.location.pathname.replace("/", "") as PageRouteEnum,
   setBottomRouteState: () => {},
   isActive: () => false,
 };

@@ -4,3 +4,11 @@ declare module "*.svg" {
   const src: string;
   export default src;
 }
+
+declare global {
+  interface window {
+    mozIndexedDB: any;
+    webkitIndexedDB: any;
+    msIndexedDB: any;
+  }
+}

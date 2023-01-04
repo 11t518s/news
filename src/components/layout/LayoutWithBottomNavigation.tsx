@@ -1,8 +1,8 @@
+import bottomNavigationImages from "assets/images/router/bottomNavigation";
+import BottomNavigation from "components/custom/bottomNavigation";
+import { PageRouteEnum } from "pages/type";
 import React, { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import bottomNavigationImages from "../../assets/images/router/bottomNavigation";
-import BottomNavigation from "../bottomNavigation";
-import { PageRouteEnum } from "../../pages/type";
 
 interface Props {
   children: ReactNode;
