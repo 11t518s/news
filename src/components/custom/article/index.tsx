@@ -42,8 +42,6 @@ const ArticleItemContainer = ({
     setTimeout(async () => {
       await refreshScrapArticles();
     }, 0);
-
-    refreshScrapArticles();
   }, []);
 
   return (
