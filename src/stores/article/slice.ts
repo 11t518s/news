@@ -4,13 +4,13 @@ import { ArticleStore } from "./type";
 import { ArticleFilterStore } from "../articleFilter";
 
 const initialState: ArticleStore = {
-  isLoading: false,
+  isLoading: true,
   data: [],
   error: "",
 };
 
 const articleSlice = createSlice({
-  name: "news",
+  name: "article",
   initialState,
   reducers: {
     resetData(state) {

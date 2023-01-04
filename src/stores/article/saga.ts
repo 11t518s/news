@@ -6,7 +6,7 @@ import { articleFilterActions, ArticleFilterStore } from "../articleFilter";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { convertDateForApi } from "../../utils/time";
 
-function* getNewsSaga(action: PayloadAction<ArticleFilterStore>) {
+function* getArticleSaga(action: PayloadAction<ArticleFilterStore>) {
   const { requestSuccess, requestFailure } = articleActions;
   const { increasePage } = articleFilterActions;
   const { page, pubDate, headline, countries } = action.payload;
@@ -22,17 +22,15 @@ function* getNewsSaga(action: PayloadAction<ArticleFilterStore>) {
     const articleData: Article = yield call(nyTimesApi.getArticle, params);
 
     yield all([put(requestSuccess(articleData)), put(increasePage())]);
-
-    put(increasePage());
   } catch (error) {
     yield put(requestFailure());
   }
 }
 
-function* watchGetNewsSaga() {
-  yield takeLatest(articleActions.requestData, getNewsSaga);
+function* watchGetArticleSaga() {
+  yield takeLatest(articleActions.requestData, getArticleSaga);
 }
 
-export default function* newsSaga() {
-  yield all([fork(watchGetNewsSaga)]);
+export default function* articleSaga() {
+  yield all([fork(watchGetArticleSaga)]);
 }

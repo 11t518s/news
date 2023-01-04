@@ -1,27 +1,28 @@
+import { PageRouteEnum } from "pages/type";
 import { createContext, forwardRef, useContext } from "react";
 import styled from "styled-components";
+import theme from "theme";
 import {
   ArticleFilterHeaderContext,
   ArticleFilterHeaderElementProps,
   ArticleFilterHeaderProps,
 } from "./type";
-import { PageRouteEnum } from "../../pages/type";
-import theme from "../../theme";
 
-const initialBottomNavigationContext: ArticleFilterHeaderContext = {
+const initialArticleBaseFilterHeaderContext: ArticleFilterHeaderContext = {
   route: PageRouteEnum.home,
   activeColor: theme.color.subSkyBlue,
   inactiveColor: theme.color.gray,
 };
 
-const bottomNavigationContext = createContext<ArticleFilterHeaderContext>(
-  initialBottomNavigationContext
-);
+const BaseArticleFilterHeaderContext =
+  createContext<ArticleFilterHeaderContext>(
+    initialArticleBaseFilterHeaderContext
+  );
 
 const BottomNavigation = forwardRef<HTMLDivElement, ArticleFilterHeaderProps>(
   ({ children, route, inactiveColor, activeColor }, ref) => {
     return (
-      <bottomNavigationContext.Provider
+      <BaseArticleFilterHeaderContext.Provider
         value={{
           route,
           activeColor,
@@ -29,7 +30,7 @@ const BottomNavigation = forwardRef<HTMLDivElement, ArticleFilterHeaderProps>(
         }}
       >
         <MainContainer ref={ref}>{children}</MainContainer>
-      </bottomNavigationContext.Provider>
+      </BaseArticleFilterHeaderContext.Provider>
     );
   }
 );
@@ -55,7 +56,9 @@ const Element = ({
   title,
   isActive,
 }: ArticleFilterHeaderElementProps) => {
-  const { activeColor, inactiveColor } = useContext(bottomNavigationContext);
+  const { activeColor, inactiveColor } = useContext(
+    BaseArticleFilterHeaderContext
+  );
   const handleElementClick = () => {
     onClick();
   };

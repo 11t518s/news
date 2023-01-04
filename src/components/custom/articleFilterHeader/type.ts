@@ -1,4 +1,4 @@
-import { PageRouteEnum } from "../../pages/type";
+import { PageRouteEnum } from "pages/type";
 import { ReactNode } from "react";
 
 export interface ArticleFilterHeaderContext {

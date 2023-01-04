@@ -3,19 +3,24 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "stores";
-import { articleFilterActions, ArticleFilterStore } from "stores/articleFilter";
-import { articleActions } from "stores/article";
+import { ArticleFilterStore } from "stores/articleFilter/type";
+import { scrapArticleFilterActions } from "stores/scrapArticleFilter";
+import { scrapArticleActions } from "stores/scrapArticle";
 
 import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
 
-const HomePage = () => {
+const ScrapPage = () => {
   const dispatch = useDispatch();
 
-  const articleFilter = useSelector((state: RootState) => state.articleFilter);
-  const { pubDate, headline, countries } = articleFilter;
-  const { data, isLoading } = useSelector((state: RootState) => state.article);
+  const { data: scrapArticles, isLoading } = useSelector(
+    (state: RootState) => state.scrapArticle
+  );
+  const scrapArticleFilter = useSelector(
+    (state: RootState) => state.scrapArticleFilter
+  );
+  const { pubDate, headline, countries } = scrapArticleFilter;
 
   const headerRef = useRef<HTMLDivElement>(null);
 
@@ -26,13 +31,12 @@ const HomePage = () => {
   };
 
   const handleFilterChange = (filter: Omit<ArticleFilterStore, "page">) => {
-    dispatch(articleFilterActions.updateArticleFilter(filter));
-    dispatch(articleActions.resetData());
-    dispatch(articleActions.requestData({ ...filter, page: 0 }));
+    dispatch(scrapArticleFilterActions.updateArticleFilter(filter));
+    dispatch(scrapArticleActions.requestData(filter));
   };
 
   const handleGetArticle = () => {
-    dispatch(articleActions.requestData(articleFilter));
+    dispatch(scrapArticleActions.requestData(scrapArticleFilter));
   };
 
   useLayoutEffect(() => {
@@ -52,9 +56,9 @@ const HomePage = () => {
       <ContentContainer excludeHeight={headerHeight}>
         <ArticleItemContainer
           isLoading={isLoading}
-          articles={data}
+          articles={scrapArticles}
           getArticle={handleGetArticle}
-          emptyTitle={"검색된 기사가 없습니다."}
+          emptyTitle={"스크랩된 데이터가 없습니다."}
         />
       </ContentContainer>
 
@@ -70,7 +74,7 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default ScrapPage;
 
 const Container = styled.div`
   width: 375px;

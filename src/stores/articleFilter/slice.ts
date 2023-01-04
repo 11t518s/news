@@ -10,7 +10,7 @@ export const initialState: ArticleFilterStore = {
 };
 
 const articleFilterSlice = createSlice({
-  name: "newsFilter",
+  name: "articleFilter",
   initialState,
   reducers: {
     updateArticleFilter(

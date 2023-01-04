@@ -1,13 +1,11 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import BasicModal from "../../modal/basicModal";
 import BasicButton from "../../button/basicButton";
-import { articleFilterActions, Countries } from "../../../stores/articleFilter";
-import { articleActions } from "../../../stores/article";
+import { ArticleFilterStore, Countries } from "../../../stores/articleFilter";
 import { convertDateForFilterHeader } from "../../../utils/time";
 import headerImages from "../../../assets/images/router/header";
 import theme from "../../../theme";
@@ -31,6 +29,7 @@ interface Props {
   headline: string;
   pubDate: Date | null;
   countries: Countries[];
+  onFilterChange: (filter: Omit<ArticleFilterStore, "page">) => void;
 }
 
 const ArticleFilterModal = ({
@@ -39,9 +38,8 @@ const ArticleFilterModal = ({
   headline: defaultHeadline,
   pubDate: defaultPubDate,
   countries: defaultCountries,
+  onFilterChange,
 }: Props) => {
-  const dispatch = useDispatch();
-
   const [pubDate, setStartDate] = useState(defaultPubDate);
   const [headline, setHeadline] = useState(defaultHeadline);
   const [countries, setCountries] = useState<Countries[]>(defaultCountries);
@@ -63,16 +61,14 @@ const ArticleFilterModal = ({
     }
   };
 
-  const handleAdjustFilterClick = async () => {
+  const handleAdjustFilterClick = () => {
     const articleFilter = {
       headline,
       countries,
       pubDate,
     };
-    dispatch(articleFilterActions.updateArticleFilter(articleFilter));
-    await dispatch(articleActions.resetData());
-    await dispatch(articleActions.requestData({ ...articleFilter, page: 0 }));
 
+    onFilterChange(articleFilter);
     setIsModal(false);
   };
 

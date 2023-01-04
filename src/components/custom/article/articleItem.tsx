@@ -1,41 +1,56 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Article } from "../../../apis/nyTimes/type";
-import { convertDateForArticle } from "../../../utils/time";
-import articleImages from "../../../assets/images/router/article";
-import theme from "../../../theme";
-import BasicToast from "../../../components/toast/basicToast";
+
+import { IndexedDBArticle } from "localDatabase/type";
+import { RootState } from "stores";
+import { scrapArticleDB } from "localDatabase";
+import { scrapArticleActions } from "stores/scrapArticle";
+import theme from "theme";
+import articleImages from "assets/images/router/article";
+import { convertDateForArticle } from "utils/time";
+
+import BasicToast from "components/toast/basicToast";
 
 interface Props {
-  article: Article;
+  article: IndexedDBArticle;
+  scrapId: number | undefined;
+  refreshScrapArticles: () => void;
 }
 
-const ArticleItem = ({ article }: Props) => {
-  const [isScrap, setIsScrap] = useState(false);
+const ArticleItem = ({ article, scrapId, refreshScrapArticles }: Props) => {
+  const dispatch = useDispatch();
+
+  const scrapFilter = useSelector(
+    (state: RootState) => state.scrapArticleFilter
+  );
+
   const [isToast, setIsToast] = useState(false);
-  const handleScrapClick = (
+  const handleScrapClick = async (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) => {
     e.preventDefault();
-    if (isScrap) {
-      // 스크렙 해제 하기
+
+    if (scrapId) {
+      dispatch(scrapArticleActions.deleteArticle(article));
+      await scrapArticleDB.delete(scrapId);
     } else {
-      // 스크렙 등록 하기
+      dispatch(scrapArticleActions.addArticle({ article, scrapFilter }));
+      await scrapArticleDB.create(article);
     }
+    await refreshScrapArticles();
     setIsToast(false);
     setTimeout(() => {
       setIsToast(true);
-    }, 0);
-    setIsScrap((prev) => !prev);
+    }, 100);
   };
 
-  useLayoutEffect(() => {}, []);
   return (
     <Container href={article.web_url}>
       <TopElement>
         <h1>{article.headline.main}</h1>
         <span onClick={handleScrapClick}>
-          {isScrap ? (
+          {scrapId ? (
             <articleImages.activeScrape color={theme.color.yellow} />
           ) : (
             <articleImages.inactiveScrape color={theme.color.darkGray} />
@@ -53,7 +68,7 @@ const ArticleItem = ({ article }: Props) => {
       <BasicToast
         isToast={isToast}
         setIsToast={setIsToast}
-        title={isScrap ? "스크랩 하셨습니다!" : "스크랩을 취소하셨습니다."}
+        title={scrapId ? "스크랩 하셨습니다!" : "스크랩을 취소하셨습니다."}
       />
     </Container>
   );
