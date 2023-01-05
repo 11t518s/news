@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -10,22 +10,19 @@ import theme from "theme";
 import articleImages from "assets/images/router/article";
 import { convertDateForArticle } from "utils/time";
 
-import BasicToast from "components/toast/basicToast";
-
 interface Props {
   article: IndexedDBArticle;
   scrapId: number | undefined;
-  refreshScrapArticles: () => void;
+  onScrapClick?: () => Promise<void>;
 }
 
-const ArticleItem = ({ article, scrapId, refreshScrapArticles }: Props) => {
+const ArticleItem = ({ article, scrapId, onScrapClick }: Props) => {
   const dispatch = useDispatch();
 
   const scrapFilter = useSelector(
     (state: RootState) => state.scrapArticleFilter
   );
 
-  const [isToast, setIsToast] = useState(false);
   const handleScrapClick = async (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) => {
@@ -38,11 +35,7 @@ const ArticleItem = ({ article, scrapId, refreshScrapArticles }: Props) => {
       dispatch(scrapArticleActions.addArticle({ article, scrapFilter }));
       await scrapArticleDB.create(article);
     }
-    await refreshScrapArticles();
-    setIsToast(false);
-    setTimeout(() => {
-      setIsToast(true);
-    }, 100);
+    onScrapClick && (await onScrapClick());
   };
 
   return (
@@ -60,16 +53,12 @@ const ArticleItem = ({ article, scrapId, refreshScrapArticles }: Props) => {
       <BottomElement>
         <ArticleInfo>
           {article.byline.organization}
-          {"  "} {article.byline.person[0]?.firstname}{" "}
+          {"  "}
+          {article.byline.person[0]?.firstname}{" "}
           {article.byline.person[0]?.lastname}
         </ArticleInfo>
         <DateType>{convertDateForArticle(article.pub_date)}</DateType>
       </BottomElement>
-      <BasicToast
-        isToast={isToast}
-        setIsToast={setIsToast}
-        title={scrapId ? "스크랩 하셨습니다!" : "스크랩을 취소하셨습니다."}
-      />
     </Container>
   );
 };
