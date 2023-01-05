@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
 import ArticleItem from "./articleItem";
@@ -14,6 +14,7 @@ interface Props {
   isLoading: boolean;
   getArticle: () => void;
   emptyTitle: string;
+  loadingComponent?: ReactNode;
 }
 
 const ArticleItemContainer = ({
@@ -21,6 +22,7 @@ const ArticleItemContainer = ({
   isLoading,
   getArticle,
   emptyTitle,
+  loadingComponent,
 }: Props) => {
   const [ref, inView] = useInView();
 
@@ -84,7 +86,7 @@ const ArticleItemContainer = ({
         setIsToast={setIsToast}
         title={isScrap ? "스크랩 하셨습니다!" : "스크랩을 취소하셨습니다."}
       />
-      {isLoading && <div>불러오는중</div>}
+      {isLoading && <LoadingContainer>{loadingComponent}</LoadingContainer>}
     </Container>
   );
 };
@@ -94,3 +96,5 @@ export default ArticleItemContainer;
 const Container = styled.div`
   padding: 20px;
 `;
+
+const LoadingContainer = styled.div``;

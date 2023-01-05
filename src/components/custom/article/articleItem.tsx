@@ -65,7 +65,7 @@ const ArticleItem = ({ article, scrapId, onScrapClick }: Props) => {
 
 export default ArticleItem;
 
-const Container = styled.a`
+export const Container = styled.a`
   cursor: pointer;
   display: block;
   background-color: ${({ theme }) => theme.color.white};
@@ -80,7 +80,7 @@ const Container = styled.a`
   }
 `;
 
-const TopElement = styled.div`
+export const TopElement = styled.div`
   margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
@@ -90,12 +90,12 @@ const TopElement = styled.div`
     justify-content: flex-end;
   }
 `;
-const BottomElement = styled.div`
+export const BottomElement = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const ArticleInfo = styled.p`
+export const ArticleInfo = styled.p`
   font-size: 13px;
   line-height: 20px;
 `;

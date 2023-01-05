@@ -9,6 +9,7 @@ import { articleActions } from "stores/article";
 import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
+import ArticleItemSkeleton from "../../components/custom/article/articleItem.skeleton";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const HomePage = () => {
           articles={data}
           getArticle={handleGetArticle}
           emptyTitle={"검색된 기사가 없습니다."}
+          loadingComponent={<ArticleItemSkeleton />}
         />
       </ContentContainer>
 
