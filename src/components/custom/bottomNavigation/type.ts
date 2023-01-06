@@ -1,5 +1,6 @@
-import { PageRouteEnum } from "pages/type";
 import { Dispatch, ReactNode, SetStateAction } from "react";
+
+import { PageRouteEnum } from "pages/type";
 
 export interface BottomNavigationContext {
   bottomRouteState: PageRouteEnum;

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { convertDateForApi } from "utils/time";
+import { IndexedDBArticle } from "localDatabase/type";
 import { ScrapArticleStore } from "./type";
-import { IndexedDBArticle } from "../../localDatabase/type";
 import { ScrapArticleFilterStore } from "../scrapArticleFilter";
-import { convertDateForApi } from "../../utils/time";
 
 const initialState: ScrapArticleStore = {
   isLoading: true,

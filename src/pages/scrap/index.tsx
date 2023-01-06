@@ -7,13 +7,13 @@ import { RootState } from "stores";
 import { ArticleFilterStore } from "stores/articleFilter/type";
 import { scrapArticleFilterActions } from "stores/scrapArticleFilter";
 import { scrapArticleActions } from "stores/scrapArticle";
+import { scrapArticleDB } from "localDatabase";
 
 import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
 import ArticleEmpty from "components/custom/article/article.empty";
 import BasicButton from "components/button/basicButton";
-import { scrapArticleDB } from "../../localDatabase";
 
 const ScrapPage = () => {
   const dispatch = useDispatch();

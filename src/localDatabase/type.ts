@@ -1,4 +1,4 @@
-import { Article } from "../apis/nyTimes/type";
+import { Article } from "apis/nyTimes/type";
 
 export interface Action<T> {
   read: () => Promise<T[]>;

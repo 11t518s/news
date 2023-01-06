@@ -6,12 +6,13 @@ import {
   useState,
 } from "react";
 import styled from "styled-components";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   BottomNavigationContext,
   BottomNavigationProps,
   BottomTabContainerProps,
 } from "./type";
-import { Link, useLocation } from "react-router-dom";
 import { PageRouteEnum } from "pages/type";
 import theme from "theme";
 

@@ -7,14 +7,6 @@ interface Props {
   title: string;
 }
 
-/**
- * useState로 선언된 istoast, setIsToast와 title을 넣어주고 setIsToast(true)로 해주면 토스트 동작
- * @param isToast
- * @param setIsToast
- * @param title
- * @constructor
- */
-
 const BasicToast: FC<Props> = ({ isToast, setIsToast, title }) => {
   useEffect(() => {}, []);
   const toastTrigger = () => {};

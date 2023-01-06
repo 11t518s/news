@@ -1,6 +1,7 @@
 import React from "react";
-import { BottomElement, Container, TopElement } from "./articleItem";
 import styled, { keyframes } from "styled-components";
+
+import { BottomElement, Container, TopElement } from "./articleItem";
 
 const ArticleItemSkeleton = () => {
   return (

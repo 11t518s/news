@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
-import articleImages from "../../../assets/images/router/article";
-import theme from "../../../theme";
+
+import articleImages from "assets/images/router/article";
+import theme from "theme";
 
 interface Props {
   title: string;

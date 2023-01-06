@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+
 import ArticleItem from "./articleItem";
 
 import { Article } from "apis/nyTimes/type";

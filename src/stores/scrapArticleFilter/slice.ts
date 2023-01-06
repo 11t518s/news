@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { ScrapArticleFilterStore } from "./type";
 
 export const initialState: ScrapArticleFilterStore = {

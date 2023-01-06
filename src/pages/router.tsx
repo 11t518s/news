@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import HomePage from "./home";
-import LayoutWithBottomNavigation from "../components/layout/LayoutWithBottomNavigation";
 import ScrapPage from "./scrap";
+import LayoutWithBottomNavigation from "components/layout/LayoutWithBottomNavigation";
 
 const PageRouter = () => {
   return (
