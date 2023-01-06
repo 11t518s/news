@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,8 +9,8 @@ import { articleActions } from "stores/article";
 import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
-import ArticleItemSkeleton from "../../components/custom/article/articleItem.skeleton";
-import ArticleEmpty from "../../components/custom/article/article.empty";
+import ArticleItemSkeleton from "components/custom/article/articleItem.skeleton";
+import ArticleEmpty from "components/custom/article/article.empty";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const HomePage = () => {
 
   const headerRef = useRef<HTMLDivElement>(null);
 
+  const [isAPILoading, setIsAPILoading] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isModal, setIsModal] = useState(false);
   const openModal = () => {
@@ -37,8 +38,16 @@ const HomePage = () => {
   };
 
   const handleGetArticle = () => {
-    dispatch(articleActions.requestData(articleFilter));
+    setIsAPILoading(true);
   };
+
+  useEffect(() => {
+    if (!isAPILoading) return;
+
+    dispatch(articleActions.requestData(articleFilter));
+    handleGetArticle();
+    setIsAPILoading(false);
+  }, [isAPILoading]);
 
   useLayoutEffect(() => {
     headerRef.current && setHeaderHeight(headerRef.current.clientHeight);

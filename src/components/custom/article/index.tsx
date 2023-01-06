@@ -25,7 +25,7 @@ const ArticleItemContainer = ({
   loadingComponent,
 }: Props) => {
   const observeTargetElementRef = useRef<HTMLDivElement>(null);
-  const [observe, unobserve] = useIntersectionObserver(() => getArticle());
+  const [observe, unobserve] = useIntersectionObserver(getArticle);
 
   const [scrapArticles, setScrapArticles] = useState<IndexedDBArticle[]>([]);
   const [isToast, setIsToast] = useState(false);
