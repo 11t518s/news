@@ -5,8 +5,8 @@ interface Props {
   color: string;
 }
 
-const ScrapPageIcon = ({ color }: Props) => {
+const ScrapPageIconComponent = ({ color }: Props) => {
   return <Scrap stroke={color} />;
 };
 
-export default ScrapPageIcon;
+export default ScrapPageIconComponent;

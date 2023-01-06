@@ -13,7 +13,7 @@ interface Props {
   articles: Article[];
   isLoading: boolean;
   getArticle: () => void;
-  emptyTitle: string;
+  emptyComponent: ReactNode;
   loadingComponent?: ReactNode;
 }
 
@@ -21,7 +21,7 @@ const ArticleItemContainer = ({
   articles,
   isLoading,
   getArticle,
-  emptyTitle,
+  emptyComponent,
   loadingComponent,
 }: Props) => {
   const observeTargetElementRef = useRef<HTMLDivElement>(null);
@@ -83,7 +83,7 @@ const ArticleItemContainer = ({
           />
         ))
       ) : isLoading ? null : (
-        <>{emptyTitle}</>
+        <EmptyComponentContainer>{emptyComponent}</EmptyComponentContainer>
       )}
       <div ref={observeTargetElementRef} />
 
@@ -104,3 +104,5 @@ const Container = styled.div`
 `;
 
 const LoadingContainer = styled.div``;
+
+const EmptyComponentContainer = styled.div``;

@@ -10,6 +10,7 @@ import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
 import ArticleItemSkeleton from "../../components/custom/article/articleItem.skeleton";
+import ArticleEmpty from "../../components/custom/article/article.empty";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -26,10 +27,13 @@ const HomePage = () => {
     setIsModal(true);
   };
 
-  const handleFilterChange = (filter: Omit<ArticleFilterStore, "page">) => {
-    dispatch(articleFilterActions.updateArticleFilter(filter));
-    dispatch(articleActions.resetData());
-    dispatch(articleActions.requestData({ ...filter, page: 0 }));
+  const handleFilterChange = async (
+    filter: Omit<ArticleFilterStore, "page">
+  ) => {
+    await Promise.all([
+      dispatch(articleFilterActions.updateArticleFilter(filter)),
+      dispatch(articleActions.resetData()),
+    ]);
   };
 
   const handleGetArticle = () => {
@@ -55,8 +59,14 @@ const HomePage = () => {
           isLoading={isLoading}
           articles={data}
           getArticle={handleGetArticle}
-          emptyTitle={"검색된 기사가 없습니다."}
           loadingComponent={<ArticleItemSkeleton />}
+          emptyComponent={
+            <ArticleEmpty
+              title={
+                "조건에 맞는 기사가 없습니다. \n 조건을 다시 설정해보세요."
+              }
+            />
+          }
         />
       </ContentContainer>
 

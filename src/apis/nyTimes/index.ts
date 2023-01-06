@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GetArticleParams, Article } from "./type";
 
-// const apikey = "AljG7ANi28deGI6fiCrQB4NCvgUf7aUu";
-const apikey = "eHSHzzYsGoXTAx159wjGqxf5gYvMxiQj";
+const apikey = "AljG7ANi28deGI6fiCrQB4NCvgUf7aUu";
+// const apikey = "eHSHzzYsGoXTAx159wjGqxf5gYvMxiQj";
 
 const URL_PATH = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 
@@ -13,7 +13,9 @@ class NYTimesApi {
     pubDate,
     headline,
   }: GetArticleParams): Promise<Article> => {
+    console.log("api 호출");
     const params = this.makeParams({ countries, pubDate, headline, page });
+    console.log(params);
 
     const result = await axios.get(URL_PATH, { params });
     if (result.status !== 200) {

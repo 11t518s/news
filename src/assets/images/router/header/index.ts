@@ -1,4 +1,4 @@
-import MagnifyingGlassComponent from "../../imageComponents/magnifyingGlassIcon";
+import MagnifyingGlassComponent from "../../imageComponents/magnifyingGlassIconComponent";
 import CalendarIconComponent from "../../imageComponents/calendarIconComponent";
 
 const headerImages = {

@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { RootState } from "stores";
 import { ArticleFilterStore } from "stores/articleFilter/type";
@@ -10,9 +11,12 @@ import { scrapArticleActions } from "stores/scrapArticle";
 import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
+import ArticleEmpty from "components/custom/article/article.empty";
+import BasicButton from "components/button/basicButton";
 
 const ScrapPage = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigate();
 
   const { data: scrapArticles, isLoading } = useSelector(
     (state: RootState) => state.scrapArticle
@@ -39,6 +43,10 @@ const ScrapPage = () => {
     dispatch(scrapArticleActions.requestData(scrapArticleFilter));
   };
 
+  const goToHome = () => {
+    navigation("/");
+  };
+
   useLayoutEffect(() => {
     headerRef.current && setHeaderHeight(headerRef.current.clientHeight);
   }, []);
@@ -58,7 +66,14 @@ const ScrapPage = () => {
           isLoading={isLoading}
           articles={scrapArticles}
           getArticle={handleGetArticle}
-          emptyTitle={"스크랩된 데이터가 없습니다."}
+          emptyComponent={
+            <ArticleEmpty
+              title={"저장된 스크랩이 없습니다."}
+              buttonComponent={
+                <BasicButton label={"스크랩 하러 가기"} onClick={goToHome} />
+              }
+            />
+          }
         />
       </ContentContainer>
 

@@ -22,6 +22,7 @@ function* getArticleSaga(action: PayloadAction<ArticleFilterStore>) {
     const articleData: Article = yield call(nyTimesApi.getArticle, params);
 
     yield all([put(requestSuccess(articleData)), put(increasePage())]);
+    yield put(increasePage());
   } catch (error) {
     yield put(requestFailure());
   }
