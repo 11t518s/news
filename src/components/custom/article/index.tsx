@@ -25,7 +25,7 @@ const ArticleItemContainer = ({
   loadingComponent,
 }: Props) => {
   const observeTargetElementRef = useRef<HTMLDivElement>(null);
-  const [observe, unobserve] = useIntersectionObserver(getArticle);
+  const [inView] = useIntersectionObserver(observeTargetElementRef);
 
   const [scrapArticles, setScrapArticles] = useState<IndexedDBArticle[]>([]);
   const [isToast, setIsToast] = useState(false);
@@ -54,15 +54,10 @@ const ArticleItemContainer = ({
   };
 
   useEffect(() => {
-    if (!observeTargetElementRef.current) return;
-
-    let observeRef: HTMLDivElement;
-    observeRef = observeTargetElementRef.current;
-    observe(observeRef);
-    return () => {
-      unobserve(observeRef);
-    };
-  }, [observeTargetElementRef.current]);
+    console.log(inView);
+    if (!inView) return;
+    getArticle();
+  }, [inView]);
 
   useEffect(() => {
     setTimeout(async () => {
