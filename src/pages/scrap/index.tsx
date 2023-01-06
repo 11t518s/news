@@ -32,7 +32,7 @@ const ScrapPage = () => {
   const [isIndexedDBLoading, setIsIndexedDBLoading] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isModal, setIsModal] = useState(false);
-  const [isHasScrap, setIsHasScrap] = useState(false);
+  const [isHasScrap, setIsHasScrap] = useState(true);
   const openModal = () => {
     setIsModal(true);
   };
@@ -51,7 +51,7 @@ const ScrapPage = () => {
     navigation("/");
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async function () {
       const scrapArticleFromDB = await scrapArticleDB.read();
       setIsHasScrap(scrapArticleFromDB.length > 0);
