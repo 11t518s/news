@@ -72,9 +72,7 @@ const HomePage = () => {
           loadingComponent={<ArticleItemSkeleton />}
           emptyComponent={
             <ArticleEmpty
-              title={
-                "조건에 맞는 기사가 없습니다. \n 조건을 다시 설정해보세요."
-              }
+              title={"조건에 맞는 기사가 없습니다. \n조건을 다시 설정해보세요."}
             />
           }
         />

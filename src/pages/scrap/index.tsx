@@ -13,6 +13,7 @@ import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
 import ArticleEmpty from "components/custom/article/article.empty";
 import BasicButton from "components/button/basicButton";
+import { scrapArticleDB } from "../../localDatabase";
 
 const ScrapPage = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const ScrapPage = () => {
   const [isIndexedDBLoading, setIsIndexedDBLoading] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isModal, setIsModal] = useState(false);
+  const [isHasScrap, setIsHasScrap] = useState(false);
   const openModal = () => {
     setIsModal(true);
   };
@@ -50,6 +52,13 @@ const ScrapPage = () => {
   };
 
   useEffect(() => {
+    (async function () {
+      const scrapArticleFromDB = await scrapArticleDB.read();
+      setIsHasScrap(scrapArticleFromDB.length > 0);
+    })();
+  }, [scrapArticles]);
+
+  useEffect(() => {
     if (!isIndexedDBLoading) return;
 
     dispatch(scrapArticleActions.requestData(scrapArticleFilter));
@@ -62,7 +71,7 @@ const ScrapPage = () => {
 
   return (
     <Container>
-      {scrapArticles.length > 0 && (
+      {isHasScrap && (
         <ArticleFilterHeader
           onClick={openModal}
           pubDate={pubDate}
@@ -79,9 +88,15 @@ const ScrapPage = () => {
           getArticleTrigger={articleTrigger}
           emptyComponent={
             <ArticleEmpty
-              title={"저장된 스크랩이 없습니다."}
+              title={
+                isHasScrap
+                  ? "해당하는 기사가 없습니다. \n필터를 다시 설정해보세요!"
+                  : "저장된 스크랩이 없습니다."
+              }
               buttonComponent={
-                <BasicButton label={"스크랩 하러 가기"} onClick={goToHome} />
+                !isHasScrap && (
+                  <BasicButton label={"스크랩 하러 가기"} onClick={goToHome} />
+                )
               }
             />
           }
