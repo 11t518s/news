@@ -67,7 +67,7 @@ const ScrapPage = () => {
 
   useLayoutEffect(() => {
     headerRef.current && setHeaderHeight(headerRef.current.clientHeight);
-  }, [isLoading]);
+  }, [isLoading, isHasScrap]);
 
   return (
     <Container>
