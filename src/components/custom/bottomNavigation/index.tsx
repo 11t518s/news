@@ -34,7 +34,7 @@ const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps>(
 
     useEffect(() => {
       setBottomTabRoute(location.pathname.replace("/", "") as PageRouteEnum);
-    }, []);
+    }, [location.pathname]);
 
     return (
       <bottomNavigationContext.Provider
@@ -56,7 +56,7 @@ const MainContainer = styled.div`
   justify-content: space-between;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  width: 100%;
+  width: 375px;
   padding: 0 60px;
   box-sizing: border-box;
   position: fixed;
