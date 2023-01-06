@@ -1,35 +1,34 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
-type Props = RefObject<HTMLElement | null>;
+type Props = () => void;
 
-const useIntersectionObserver = (element: Props) => {
-  const [inView, setInView] = useState(false);
+const useIntersectionObserver = (callback: Props) => {
   const observer = useRef(
     new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setInView(true);
-          } else {
-            setInView(false);
+            callback();
           }
         });
       },
       { threshold: 1 }
     )
   );
-  useEffect(() => {
-    if (!element.current) return;
 
-    observer.current.observe(element.current);
-    return () => {
-      if (!element.current) return;
+  const observe = (element: Element | null) => {
+    if (!element) return;
 
-      observer.current.unobserve(element.current);
-    };
-  }, []);
+    observer.current.observe(element);
+  };
 
-  return [inView, setInView];
+  const unobserve = (element: Element | null) => {
+    if (!element) return;
+
+    observer.current.unobserve(element);
+  };
+
+  return [observe, unobserve];
 };
 
 export default useIntersectionObserver;
