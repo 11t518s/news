@@ -8,7 +8,7 @@ export class DB implements Action<IndexedDBArticle> {
   }
   public read = (): Promise<IndexedDBArticle[]> => {
     return new Promise((resolve, reject) => {
-      if (!this.db) return reject([]);
+      if (!this.db) return;
 
       const transaction = this.db.transaction([this.room]);
       const objectStore = transaction.objectStore(this.room);
@@ -29,7 +29,7 @@ export class DB implements Action<IndexedDBArticle> {
 
   create = (data: IndexedDBArticle): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      if (!this.db) return reject(false);
+      if (!this.db) return;
 
       const objectStore = this.db
         .transaction([this.room], "readwrite")
@@ -49,7 +49,7 @@ export class DB implements Action<IndexedDBArticle> {
 
   delete = (id: number): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      if (!this.db) return reject(false);
+      if (!this.db) return;
 
       const request = this.db
         .transaction([this.room], "readwrite")
