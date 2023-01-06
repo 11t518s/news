@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GetArticleParams, Article } from "./type";
 
-// const apikey = "AljG7ANi28deGI6fiCrQB4NCvgUf7aUu";
-const apikey = "eHSHzzYsGoXTAx159wjGqxf5gYvMxiQj";
+const apikey = "AljG7ANi28deGI6fiCrQB4NCvgUf7aUu";
+// const apikey = "eHSHzzYsGoXTAx159wjGqxf5gYvMxiQj";
 
 const URL_PATH = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 

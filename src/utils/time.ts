@@ -10,6 +10,16 @@ export const convertDateForArticle = (targetDate: string) => {
   return YYYMMDD.replace("년 ", ".").replace("월 ", ".").replace("일", ".");
 };
 
+export const convertDateForScrapFilter = (targetDate: Date) => {
+  const date = new Date(targetDate);
+  const year = date.getFullYear();
+  const month =
+    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+
+  return `${year}-${month}-${day}`;
+};
+
 export const convertDateForApi = (targetDate: Date) => {
   const date = new Date(targetDate);
   const YYYYMMDD = new Intl.DateTimeFormat("ko", {

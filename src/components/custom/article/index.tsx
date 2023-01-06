@@ -1,46 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useInView } from "react-intersection-observer";
 import ArticleItem from "./articleItem";
+
 import { Article } from "apis/nyTimes/type";
-import { scrapArticleDB } from "../../../localDatabase";
-import { IndexedDBArticle } from "../../../localDatabase/type";
+import { IndexedDBArticle } from "localDatabase/type";
+import { scrapArticleDB } from "localDatabase";
+
+import BasicToast from "components/toast/basicToast";
+import useIntersectionObserver from "../../../hooks/useIntersectionObserver";
 
 interface Props {
   articles: Article[];
   isLoading: boolean;
-  getArticle: () => void;
-  emptyTitle: string;
+  getArticleTrigger: () => void;
+  emptyComponent: ReactNode;
+  loadingComponent?: ReactNode;
 }
 
 const ArticleItemContainer = ({
   articles,
   isLoading,
-  getArticle,
-  emptyTitle,
+  getArticleTrigger,
+  emptyComponent,
+  loadingComponent,
 }: Props) => {
-  const [ref, inView] = useInView();
+  const observeTargetElementRef = useRef<HTMLDivElement>(null);
+  const [observe, unobserve] = useIntersectionObserver(getArticleTrigger);
 
   const [scrapArticles, setScrapArticles] = useState<IndexedDBArticle[]>([]);
+  const [isToast, setIsToast] = useState(false);
+  const [isScrap, setIsScrap] = useState(false);
 
   const getScrapId = (article: Article) =>
     scrapArticles.find((scrapArticle) => scrapArticle._id === article._id)?.ID;
 
-  const refreshScrapArticles = async () => {
-    const data = await scrapArticleDB.read();
+  const getScrapArticles = async () => {
+    return scrapArticleDB.read();
+  };
 
+  const toastTrigger = (data: IndexedDBArticle[]) => {
+    setIsScrap(data.length > scrapArticles.length);
+
+    setIsToast(false);
+    setTimeout(() => {
+      setIsToast(true);
+    }, 100);
+  };
+
+  const handleScrapClick = async () => {
+    const data = await getScrapArticles();
     setScrapArticles(data);
+    toastTrigger(data);
   };
 
   useEffect(() => {
-    if (!inView) return;
+    if (!observeTargetElementRef.current) return;
 
-    getArticle();
-  }, [inView]);
+    let observeRef: HTMLDivElement;
+    observeRef = observeTargetElementRef.current;
+    observe(observeRef);
+    return () => {
+      unobserve(observeRef);
+    };
+  }, [observeTargetElementRef.current]);
 
   useEffect(() => {
     setTimeout(async () => {
-      await refreshScrapArticles();
+      const data = await getScrapArticles();
+      setScrapArticles(data);
     }, 0);
   }, []);
 
@@ -52,15 +79,20 @@ const ArticleItemContainer = ({
             article={article}
             scrapId={getScrapId(article)}
             key={`${article._id}_${index}`}
-            refreshScrapArticles={refreshScrapArticles}
+            onScrapClick={handleScrapClick}
           />
         ))
       ) : isLoading ? null : (
-        <>{emptyTitle}</>
+        <EmptyComponentContainer>{emptyComponent}</EmptyComponentContainer>
       )}
-      <div ref={ref} />
+      <div ref={observeTargetElementRef} />
 
-      {isLoading && <div>불러오는중</div>}
+      <BasicToast
+        isToast={isToast}
+        setIsToast={setIsToast}
+        title={isScrap ? "스크랩 하셨습니다!" : "스크랩을 취소하셨습니다."}
+      />
+      {isLoading && <LoadingContainer>{loadingComponent}</LoadingContainer>}
     </Container>
   );
 };
@@ -70,3 +102,7 @@ export default ArticleItemContainer;
 const Container = styled.div`
   padding: 20px;
 `;
+
+const LoadingContainer = styled.div``;
+
+const EmptyComponentContainer = styled.div``;

@@ -1,11 +1,17 @@
-import { createContext, forwardRef, useContext, useState } from "react";
+import {
+  createContext,
+  forwardRef,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
 import {
   BottomNavigationContext,
   BottomNavigationProps,
   BottomTabContainerProps,
 } from "./type";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { PageRouteEnum } from "pages/type";
 import theme from "theme";
 
@@ -21,9 +27,14 @@ const bottomNavigationContext = createContext<BottomNavigationContext>(
 
 const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps>(
   ({ children, initialRoute }, ref) => {
+    const location = useLocation();
     const [bottomTabRoute, setBottomTabRoute] =
       useState<PageRouteEnum>(initialRoute);
     const isActive = (thisRoute: PageRouteEnum) => bottomTabRoute === thisRoute;
+
+    useEffect(() => {
+      setBottomTabRoute(location.pathname.replace("/", "") as PageRouteEnum);
+    }, [location.pathname]);
 
     return (
       <bottomNavigationContext.Provider
@@ -45,7 +56,7 @@ const MainContainer = styled.div`
   justify-content: space-between;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  width: 100%;
+  width: 375px;
   padding: 0 60px;
   box-sizing: border-box;
   position: fixed;

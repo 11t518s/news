@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,6 +9,8 @@ import { articleActions } from "stores/article";
 import ArticleFilterHeader from "components/custom/articleFilterHeader";
 import ArticleItemContainer from "components/custom/article";
 import ArticleFilterModal from "components/custom/articleFilterModal";
+import ArticleItemSkeleton from "components/custom/article/articleItem.skeleton";
+import ArticleEmpty from "components/custom/article/article.empty";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -19,21 +21,34 @@ const HomePage = () => {
 
   const headerRef = useRef<HTMLDivElement>(null);
 
+  const [isAPILoading, setIsAPILoading] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isModal, setIsModal] = useState(false);
   const openModal = () => {
     setIsModal(true);
   };
 
-  const handleFilterChange = (filter: Omit<ArticleFilterStore, "page">) => {
-    dispatch(articleFilterActions.updateArticleFilter(filter));
-    dispatch(articleActions.resetData());
-    dispatch(articleActions.requestData({ ...filter, page: 0 }));
+  const handleFilterChange = async (
+    filter: Omit<ArticleFilterStore, "page">
+  ) => {
+    await Promise.all([
+      dispatch(articleFilterActions.updateArticleFilter(filter)),
+      dispatch(articleActions.resetData()),
+    ]);
+
+    setIsAPILoading(true);
   };
 
-  const handleGetArticle = () => {
-    dispatch(articleActions.requestData(articleFilter));
+  const articleTrigger = () => {
+    setIsAPILoading(true);
   };
+
+  useEffect(() => {
+    if (!isAPILoading) return;
+
+    dispatch(articleActions.requestData(articleFilter));
+    setIsAPILoading(false);
+  }, [isAPILoading]);
 
   useLayoutEffect(() => {
     headerRef.current && setHeaderHeight(headerRef.current.clientHeight);
@@ -53,8 +68,13 @@ const HomePage = () => {
         <ArticleItemContainer
           isLoading={isLoading}
           articles={data}
-          getArticle={handleGetArticle}
-          emptyTitle={"검색된 기사가 없습니다."}
+          getArticleTrigger={articleTrigger}
+          loadingComponent={<ArticleItemSkeleton />}
+          emptyComponent={
+            <ArticleEmpty
+              title={"조건에 맞는 기사가 없습니다. \n조건을 다시 설정해보세요."}
+            />
+          }
         />
       </ContentContainer>
 

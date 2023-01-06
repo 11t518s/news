@@ -1,9 +1,9 @@
-import HomePageIcon from "../../imageComponents/homePageIcon";
-import ScrapPageIcon from "../../imageComponents/scrapPageIcon";
+import HomePageIconComponent from "../../imageComponents/homePageIconComponent";
+import ScrapPageIconComponent from "../../imageComponents/scrapPageIconComponent";
 
 const bottomNavigationImages = {
-  homeIconComponent: HomePageIcon,
-  scrapIconComponent: ScrapPageIcon,
+  homeIconComponent: HomePageIconComponent,
+  scrapIconComponent: ScrapPageIconComponent,
 };
 
 export default bottomNavigationImages;

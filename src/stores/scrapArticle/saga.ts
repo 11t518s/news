@@ -5,7 +5,7 @@ import { scrapArticleActions } from "./slice";
 import { ScrapArticleFilterStore } from "stores/scrapArticleFilter/type";
 import { scrapArticleDB } from "localDatabase";
 import { IndexedDBArticle } from "localDatabase/type";
-import { convertDateForApi } from "utils/time";
+import { convertDateForScrapFilter } from "utils/time";
 
 function* getScrapArticleSaga(action: PayloadAction<ScrapArticleFilterStore>) {
   const { requestSuccess, requestFailure } = scrapArticleActions;
@@ -14,32 +14,36 @@ function* getScrapArticleSaga(action: PayloadAction<ScrapArticleFilterStore>) {
   try {
     const articleData: IndexedDBArticle[] = yield call(scrapArticleDB.read);
 
-    yield put(
-      requestSuccess(
-        articleData
-          .filter((article) => {
-            if (!headline) return true;
+    const filteredArticle = articleData
+      .filter((article) => {
+        if (!headline) return true;
 
-            return article.headline.main.includes(headline);
-          })
-          .filter((article) => {
-            if (!pubDate) return true;
+        return article.headline.main
+          .toLowerCase()
+          .includes(headline.toLowerCase());
+      })
+      .filter((article) => {
+        if (!pubDate) return true;
 
-            return (
-              article.pub_date.slice(0, article.pub_date.indexOf("T")) ===
-              convertDateForApi(pubDate)
-            );
-          })
-          .filter((article) => {
-            if (countries.length === 0) return true;
-            return article.keywords.some(
-              (keyword) =>
-                keyword.name === "glocations" &&
-                countries.some((country) => country.value === keyword.value)
-            );
-          })
-      )
-    );
+        return (
+          article.pub_date.slice(0, article.pub_date.indexOf("T")) ===
+          convertDateForScrapFilter(pubDate)
+        );
+      })
+      .filter((article) => {
+        if (countries.length === 0) return true;
+
+        return article.keywords.some(
+          (keyword) =>
+            keyword.name === "glocations" &&
+            countries.some(
+              (country) =>
+                country.value.toLowerCase() === keyword.value.toLowerCase()
+            )
+        );
+      });
+
+    yield put(requestSuccess(filteredArticle));
   } catch (error) {
     yield put(requestFailure());
   }
