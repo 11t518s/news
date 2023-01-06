@@ -1,6 +1,5 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useInView } from "react-intersection-observer";
 import ArticleItem from "./articleItem";
 
 import { Article } from "apis/nyTimes/type";
@@ -8,6 +7,7 @@ import { IndexedDBArticle } from "localDatabase/type";
 import { scrapArticleDB } from "localDatabase";
 
 import BasicToast from "components/toast/basicToast";
+import useIntersectionObserver from "../../../hooks/useIntersectionObserver";
 
 interface Props {
   articles: Article[];
@@ -24,7 +24,8 @@ const ArticleItemContainer = ({
   emptyTitle,
   loadingComponent,
 }: Props) => {
-  const [ref, inView] = useInView();
+  const observeTargetElementRef = useRef<HTMLDivElement>(null);
+  const [observe, unobserve] = useIntersectionObserver(() => getArticle());
 
   const [scrapArticles, setScrapArticles] = useState<IndexedDBArticle[]>([]);
   const [isToast, setIsToast] = useState(false);
@@ -53,10 +54,15 @@ const ArticleItemContainer = ({
   };
 
   useEffect(() => {
-    if (!inView) return;
+    if (!observeTargetElementRef.current) return;
 
-    getArticle();
-  }, [inView]);
+    let observeRef: HTMLDivElement;
+    observeRef = observeTargetElementRef.current;
+    observe(observeRef);
+    return () => {
+      unobserve(observeRef);
+    };
+  }, [observeTargetElementRef.current]);
 
   useEffect(() => {
     setTimeout(async () => {
@@ -79,7 +85,7 @@ const ArticleItemContainer = ({
       ) : isLoading ? null : (
         <>{emptyTitle}</>
       )}
-      <div ref={ref} />
+      <div ref={observeTargetElementRef} />
 
       <BasicToast
         isToast={isToast}
