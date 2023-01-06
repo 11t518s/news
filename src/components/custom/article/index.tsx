@@ -12,7 +12,7 @@ import useIntersectionObserver from "../../../hooks/useIntersectionObserver";
 interface Props {
   articles: Article[];
   isLoading: boolean;
-  getArticle: () => void;
+  getArticleTrigger: () => void;
   emptyComponent: ReactNode;
   loadingComponent?: ReactNode;
 }
@@ -20,12 +20,12 @@ interface Props {
 const ArticleItemContainer = ({
   articles,
   isLoading,
-  getArticle,
+  getArticleTrigger,
   emptyComponent,
   loadingComponent,
 }: Props) => {
   const observeTargetElementRef = useRef<HTMLDivElement>(null);
-  const [observe, unobserve] = useIntersectionObserver(getArticle);
+  const [observe, unobserve] = useIntersectionObserver(getArticleTrigger);
 
   const [scrapArticles, setScrapArticles] = useState<IndexedDBArticle[]>([]);
   const [isToast, setIsToast] = useState(false);

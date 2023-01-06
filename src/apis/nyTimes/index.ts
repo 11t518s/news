@@ -13,9 +13,7 @@ class NYTimesApi {
     pubDate,
     headline,
   }: GetArticleParams): Promise<Article> => {
-    console.log("api 호출");
     const params = this.makeParams({ countries, pubDate, headline, page });
-    console.log(params);
 
     const result = await axios.get(URL_PATH, { params });
     if (result.status !== 200) {

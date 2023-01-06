@@ -35,9 +35,11 @@ const HomePage = () => {
       dispatch(articleFilterActions.updateArticleFilter(filter)),
       dispatch(articleActions.resetData()),
     ]);
+
+    setIsAPILoading(true);
   };
 
-  const handleGetArticle = () => {
+  const articleTrigger = () => {
     setIsAPILoading(true);
   };
 
@@ -45,7 +47,6 @@ const HomePage = () => {
     if (!isAPILoading) return;
 
     dispatch(articleActions.requestData(articleFilter));
-    handleGetArticle();
     setIsAPILoading(false);
   }, [isAPILoading]);
 
@@ -67,7 +68,7 @@ const HomePage = () => {
         <ArticleItemContainer
           isLoading={isLoading}
           articles={data}
-          getArticle={handleGetArticle}
+          getArticleTrigger={articleTrigger}
           loadingComponent={<ArticleItemSkeleton />}
           emptyComponent={
             <ArticleEmpty

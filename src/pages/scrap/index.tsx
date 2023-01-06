@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,7 @@ const ScrapPage = () => {
 
   const headerRef = useRef<HTMLDivElement>(null);
 
+  const [isIndexedDBLoading, setIsIndexedDBLoading] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isModal, setIsModal] = useState(false);
   const openModal = () => {
@@ -37,35 +38,45 @@ const ScrapPage = () => {
   const handleFilterChange = (filter: Omit<ArticleFilterStore, "page">) => {
     dispatch(scrapArticleFilterActions.updateArticleFilter(filter));
     dispatch(scrapArticleActions.requestData(filter));
+    setIsIndexedDBLoading(true);
   };
 
-  const handleGetArticle = () => {
-    dispatch(scrapArticleActions.requestData(scrapArticleFilter));
+  const articleTrigger = () => {
+    setIsIndexedDBLoading(true);
   };
 
   const goToHome = () => {
     navigation("/");
   };
 
+  useEffect(() => {
+    if (!isIndexedDBLoading) return;
+
+    dispatch(scrapArticleActions.requestData(scrapArticleFilter));
+    setIsIndexedDBLoading(false);
+  }, [isIndexedDBLoading]);
+
   useLayoutEffect(() => {
     headerRef.current && setHeaderHeight(headerRef.current.clientHeight);
-  }, []);
+  }, [isLoading]);
 
   return (
     <Container>
-      <ArticleFilterHeader
-        onClick={openModal}
-        pubDate={pubDate}
-        headline={headline}
-        countries={countries}
-        ref={headerRef}
-      />
+      {scrapArticles.length > 0 && (
+        <ArticleFilterHeader
+          onClick={openModal}
+          pubDate={pubDate}
+          headline={headline}
+          countries={countries}
+          ref={headerRef}
+        />
+      )}
 
       <ContentContainer excludeHeight={headerHeight}>
         <ArticleItemContainer
           isLoading={isLoading}
           articles={scrapArticles}
-          getArticle={handleGetArticle}
+          getArticleTrigger={articleTrigger}
           emptyComponent={
             <ArticleEmpty
               title={"저장된 스크랩이 없습니다."}
